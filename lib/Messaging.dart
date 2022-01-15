@@ -3,6 +3,17 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
+final ScrollController _controller = ScrollController();
+
+void _scrollDown() {
+  _controller.animateTo(
+      _controller.position.maxScrollExtent + 100,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 500)
+    );
+}
 
 class MessagingClient {
   String nameID;
@@ -66,8 +77,7 @@ class MessagingClient {
 
 List<Widget> messageBuilder(List<DocumentSnapshot> list) {
   list.sort((DocumentSnapshot a, DocumentSnapshot b) =>
-      (a["timestamp"] as Timestamp)
-          .compareTo(b["timestamp"] as Timestamp));
+      (a["timestamp"] as Timestamp).compareTo(b["timestamp"] as Timestamp));
   return list
       .map((DocumentSnapshot e) => Message.fromSnapshot(e).toWidget())
       .toList();
@@ -78,12 +88,16 @@ StreamBuilder messageList(MessagingClient messagingClient) {
       stream: messagingClient.allMessagesStream,
       builder: (BuildContext context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
+        if(_controller.hasClients) {
+          _scrollDown();
+        }
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: ListView(
-              children: messageBuilder(
-                  snapshot.data.docs as List<DocumentSnapshot>),
+              children:
+                  messageBuilder(snapshot.data.docs as List<DocumentSnapshot>),
               shrinkWrap: true,
+              controller: _controller,
             ));
       });
 }
@@ -96,16 +110,16 @@ class Message {
 
   Card get card {
     return Card(
-      color: this.isUser ? Color(0xffC4E1FB) : null,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-      child: Padding(
-        padding: EdgeInsets.all(18),
-        child: Text(
-          this.message,
-          style: TextStyle(fontSize: 17),
-        ),
-      ),
-    );
+        color: this.isUser ? Color(0xffC4E1FB) : null,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        child: Padding(
+          padding: EdgeInsets.all(18),
+          child: Text(
+            this.message,
+            style: TextStyle(fontSize: 17),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ));
   }
 
   Message({this.isUser, this.message, this.timestamp, this.id});
