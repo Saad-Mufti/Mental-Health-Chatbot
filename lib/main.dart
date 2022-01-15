@@ -10,9 +10,10 @@ final globalKey = GlobalKey<ScaffoldState>();
 
 initDialogFlow() async {
   auth = await dialogflow.AuthGoogle(
-          fileJson: "assets/actual_dialogflow_api_key.json")
+          fileJson: "assets/mental-health-bot-ttgm-d3c2a7e002f8.json")
       .build();
   df = dialogflow.Dialogflow(authGoogle: auth);
+  print(df);
 }
 
 void main() {

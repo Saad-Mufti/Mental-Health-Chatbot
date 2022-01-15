@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +141,7 @@ class Message {
 }
 
 TextEditingController inputController =
-    TextEditingController(text: "Say Something...");
+    TextEditingController();
 
 void userSend(Dialogflow df, MessagingClient client) {
   if (inputController.text.isNotEmpty) {
@@ -148,7 +150,10 @@ void userSend(Dialogflow df, MessagingClient client) {
     inputController.clear();
     df
         .detectIntent(text)
-        .then((value) => client.send(text: value.getMessage(), isUser: false));
+        .then((value) {
+          client.send(text: value.getMessage(), isUser: false);
+          print("Sent??");
+        });
   }
 }
 
@@ -162,8 +167,11 @@ Widget bottomMessageBar(
           Flexible(
               child: Padding(
                   padding: EdgeInsets.all(20),
-                  child: EditableText(
-                      backgroundCursorColor: Color.fromARGB(21, 32, 43, 1),
+                  child: TextField(
+                      // backgroundCursorColor: Color.fromARGB(21, 32, 43, 1),
+                      decoration: InputDecoration(
+                        hintText: "Say something..."
+                      ),
                       focusNode: FocusNode(),
                       cursorColor: Color.fromARGB(21, 32, 43, 1),
                       controller: inputController,
