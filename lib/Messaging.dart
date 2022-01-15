@@ -1,20 +1,18 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 
 class MessagingClient {
   String nameID;
 
-  Firestore get firestoreInstance {
-    return Firestore.instance;
+  FirebaseFirestore get firestoreInstance {
+    return FirebaseFirestore.instance;
   }
 
   DocumentReference get db {
-    firestoreInstance.collection("conversations").document(nameID);
+    firestoreInstance.collection("conversations").doc(nameID);
   }
 
   MessagingClient(String name) {
@@ -38,16 +36,16 @@ class MessagingClient {
   Future<List<DocumentSnapshot>> get messages async {
     return (await firestoreInstance
             .collection("conversations")
-            .document(nameID)
+            .doc(nameID)
             .collection("allMessages")
-            .getDocuments())
-        .documents;
+            .get())
+        .docs;
   }
 
   Stream<QuerySnapshot> get allMessagesStream {
     return firestoreInstance
         .collection("conversations")
-        .document(nameID)
+        .doc(nameID)
         .collection("allMessages")
         .snapshots();
   }
@@ -55,10 +53,10 @@ class MessagingClient {
   void send({String text, bool isUser}) {
     firestoreInstance
         .collection("conversations")
-        .document(nameID)
+        .doc(nameID)
         .collection("allMessages")
-        .document()
-        .setData({
+        .doc()
+        .set({
       "timestamp": Timestamp.now(),
       "message": text,
       "isUser": isUser
@@ -68,8 +66,8 @@ class MessagingClient {
 
 List<Widget> messageBuilder(List<DocumentSnapshot> list) {
   list.sort((DocumentSnapshot a, DocumentSnapshot b) =>
-      (a.data["timestamp"] as Timestamp)
-          .compareTo(b.data["timestamp"] as Timestamp));
+      (a["timestamp"] as Timestamp)
+          .compareTo(b["timestamp"] as Timestamp));
   return list
       .map((DocumentSnapshot e) => Message.fromSnapshot(e).toWidget())
       .toList();
@@ -85,7 +83,7 @@ StreamBuilder messageList() {
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: ListView(
               children: messageBuilder(
-                  snapshot.data.documents as List<DocumentSnapshot>),
+                  snapshot.data.docs as List<DocumentSnapshot>),
               shrinkWrap: true,
             ));
       });
@@ -115,10 +113,11 @@ class Message {
 
   static Message fromSnapshot(DocumentSnapshot snapshot) {
     return Message(
-        id: snapshot.documentID,
-        message: snapshot.data["message"],
-        timestamp: snapshot.data["timestamp"],
-        isUser: snapshot.data["isUser"]);
+        id: snapshot.id,
+        message: snapshot["message"],
+        // message: snapshot.data["message"],
+        timestamp: snapshot["timestamp"],
+        isUser: snapshot["isUser"]);
   }
 
   Row toWidget() {
@@ -140,20 +139,17 @@ class Message {
   }
 }
 
-TextEditingController inputController =
-    TextEditingController();
+TextEditingController inputController = TextEditingController();
 
 void userSend(Dialogflow df, MessagingClient client) {
   if (inputController.text.isNotEmpty) {
     var text = inputController.text;
     client.send(text: text, isUser: true);
     inputController.clear();
-    df
-        .detectIntent(text)
-        .then((value) {
-          client.send(text: value.getMessage(), isUser: false);
-          print("Sent??");
-        });
+    df.detectIntent(text).then((value) {
+      client.send(text: value.getMessage(), isUser: false);
+      print("Sent??");
+    });
   }
 }
 
@@ -169,9 +165,7 @@ Widget bottomMessageBar(
                   padding: EdgeInsets.all(20),
                   child: TextField(
                       // backgroundCursorColor: Color.fromARGB(21, 32, 43, 1),
-                      decoration: InputDecoration(
-                        hintText: "Say something..."
-                      ),
+                      decoration: InputDecoration(hintText: "Say something..."),
                       focusNode: FocusNode(),
                       cursorColor: Color.fromARGB(21, 32, 43, 1),
                       controller: inputController,

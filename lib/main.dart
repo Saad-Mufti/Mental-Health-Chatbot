@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_dialogflow/dialogflow_v2.dart" as dialogflow;
 import 'Messaging.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 var auth;
 dialogflow.Dialogflow df;
@@ -10,13 +12,17 @@ final globalKey = GlobalKey<ScaffoldState>();
 
 initDialogFlow() async {
   auth = await dialogflow.AuthGoogle(
-          fileJson: "assets/mental-health-bot-ttgm-d3c2a7e002f8.json")
+          fileJson: "assets/actual_dialogflow_api_key.json")
       .build();
   df = dialogflow.Dialogflow(authGoogle: auth);
-  print(df);
+  print(df.language);
 }
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
@@ -25,6 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     initDialogFlow();
 
     return MaterialApp(
