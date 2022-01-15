@@ -73,8 +73,7 @@ List<Widget> messageBuilder(List<DocumentSnapshot> list) {
       .toList();
 }
 
-StreamBuilder messageList() {
-  var messagingClient = MessagingClient("Saad Mufti");
+StreamBuilder messageList(MessagingClient messagingClient) {
   return StreamBuilder(
       stream: messagingClient.allMessagesStream,
       builder: (BuildContext context, snapshot) {

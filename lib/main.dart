@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
 
-    var messagingClient = MessagingClient("Saad Mufti");
+    var messagingClient = MessagingClient("John Doe");
     return Scaffold(
       backgroundColor: Color(0xffFFF9C7),
       key: globalKey,
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(child: messageList()),
+            Expanded(child: messageList(messagingClient)),
             bottomMessageBar(context, messagingClient, df)
           ],
         ),
