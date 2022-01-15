@@ -1,15 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import "package:flutter_dialogflow/dialogflow_v2.dart" as dialogflow;
-
+import 'Messaging.dart';
 
 var auth;
-var df;
+dialogflow.Dialogflow df;
 
 final globalKey = GlobalKey<ScaffoldState>();
 
 initDialogFlow() async {
-  auth = await dialogflow.AuthGoogle(fileJson: "assets/actual_dialogflow_api_key.json").build();
+  auth = await dialogflow.AuthGoogle(
+          fileJson: "assets/actual_dialogflow_api_key.json")
+      .build();
   df = dialogflow.Dialogflow(authGoogle: auth);
 }
 
@@ -20,29 +22,21 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
-
   @override
   Widget build(BuildContext context) {
     initDialogFlow();
+
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Mental Health App!',
       theme: ThemeData(
         // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Home'),
     );
   }
 }
@@ -66,16 +60,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      //calls build() below to update values. Very useful
     });
   }
 
@@ -83,11 +70,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    var messagingClient = MessagingClient("Saad Mufti");
     return Scaffold(
+      backgroundColor: Color(0xffFFF9C7),
       key: globalKey,
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -114,38 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            EditableText(
-              backgroundCursorColor: Color.fromARGB(21, 32, 43, 1),
-              focusNode: FocusNode(),
-              cursorColor: Color.fromARGB(21, 32, 43, 1),
-              controller: TextEditingController(text: "Enter your query here"),
-              style: Theme.of(context).textTheme.headline4,
-              onSubmitted: (text) {
-                df.detectIntent(text).then((value) {
-                  print(value);
-                      /*Scaffold.of(this.context).showSnackBar(SnackBar(
-                        content: Text(value.getMessage()),
-                      ));*/
-                    globalKey.currentState.showSnackBar(SnackBar(
-                      content: Text(value.getMessage())));
-                    });
-              },
-            )
+            Expanded(child: messageList()),
+            bottomMessageBar(context, messagingClient, df)
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

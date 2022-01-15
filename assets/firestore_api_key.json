@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "533939124310",
+    "firebase_url": "https://mental-health-chatbot-87bdf.firebaseio.com",
+    "project_id": "mental-health-chatbot-87bdf",
+    "storage_bucket": "mental-health-chatbot-87bdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533939124310:android:57175f2ad0ecc80dd823f7",
+        "android_client_info": {
+          "package_name": "com.mental_health.chatbot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533939124310-6n0q1qker0jq8a2pb9lf0395e5mi09ti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6TF8YYZ3KsxwxYjaZ_DqtmN-b5lqpr8E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533939124310-6n0q1qker0jq8a2pb9lf0395e5mi09ti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

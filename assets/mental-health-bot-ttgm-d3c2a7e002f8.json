@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mental-health-bot-ttgm",
+  "private_key_id": "d3c2a7e002f8516e03936c9a5189ecca7bc2edfe",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCvNbG2o30EKZLb\ni81difyGt6vUO8aZUAUKpaLvxBDKVaX28oqtJh/4WhZDDX45ti+I54nNZ2fr4c6v\n8DsrTByfZnI1U0lYK7CcRouBm9dkKNfd0p74h15cDLO4Dtmgd7UsL/B4QphovLtQ\njw7ry9/9G07qrtL1+F6atr8S0dv4tR7wWBQDsE3w+6agL2ddMiOzatNt8aZCdgDe\n76GqtnlMFKiE4f8HscI58BOxVFtKZ12K4ggFWlnMJo96uFwfiAsOrUtjN3cMxIDQ\nElt78ypOfkQxm1JqnUQ95O9cXZ8dKsuSD3Z1f/lAOMozvy92OHnwE4+pyDzctjvr\n/MiXBREhAgMBAAECggEACnBAALoXyiYx7iuTliWQ6nPJ5HCVQfAPBNXecbt0JqHY\nq/BCS9OQJwsy9Va59PVCOr1Uq+yjt91xo3DEDa3QrLx9RGkMXxjnQkA/sn6W5Aw8\n5CXWu8bQ29oT4PzdgV5waEwI3xlUnDTWUhPb1zeDxkAYwQmeXvInrL8DfjsLiHMk\nwfFPHVEJVYeeh8EgQbLCxHXtsxd7f0zwjw4B2pYeFgdUwjl1NOO4T/dr2RoVoQ/5\nOrPDoyH813BIMuFWEOWjDaOMIuWVnnCCUrVPtyff5OHpt9ouCiw984koZwpypitz\nsJo5mZ1FbUWEq1k0gTUH2JVKAUy7B4f+Nl4bTdua2QKBgQDXegOPF1gjwdIJM9+u\naJIPjOGG/5l5U2dirVy/6VrdF7PeqqvVTCQ05BMtkCV8JIHq8BUTZr9qEx47pmrD\nyNbHKpvzVItXQZ4LxrGplE364MJi/HkVo9azl3bUD1b4DVNZnV8lfNjFvWLCudDB\nugSxkKvnvsqFQc54tWd+IkJGBQKBgQDQKQ6XCzc9t+b2uz3rtvW9+60vYl3oGrpP\nYmpmtzrZVbDTMRqyFfjvV+myRBF7tWEeHLgEl2rpVcIp21leGe7NMxFCp2R10FJN\nnhqcTaBUhZRetw7nF5lqRrKPmdAW+WlevdlQbK3zpck3DX6VcNUittw5slwkffTs\n2zrMo3MNbQKBgQCqCPqt+/ntnZEk+e5VLuezpbSCV0jA2PQIhk1ek8LEHWQvHfcj\nBka8Bg6sMceiwxxSTMoU2UvLZPLCl3xAq0fxOsp9pgWfAYS6Pj0MWJ+AjcRXYGwc\ni4FtjuSSStiSPdG8MddXOcHFqME6cG8vsJ7rkAJXidM+fMN1tZDJlDdAEQKBgQDM\nTE9ufOqFn3WGGLUoIBRFlrodtFxYDctnWD73esO+RHTcgegieqAsP8s0U8wY7yZX\nCHauwvGB+tIqhIbMbYVLTeCV23YkjwYH+bFCUImYCtZYsy9kLWw7uxFLEPoDYlxB\nSPD9Fv0PEVpPtuXSw7/bZz7zPZNjmV+GC5BFAfJMbQKBgEd71ZjHvSrc4ZlbH+7t\nKkXXam0rfVJx2xrN5v3+UGt1FH9Tmsg0HSHZt06GBJBgIBuuTCDPVT3vFLeRQE9t\n47LwvRmStsonUSfO4aAG5XkRlJZ7/r1c6f4PbA4+dVayDCybcPuuqCahlTrJsdfa\n9iCnrq2GOzQNySyl7RluOZGC\n-----END PRIVATE KEY-----\n",
+  "client_email": "mhb-service-acct@mental-health-bot-ttgm.iam.gserviceaccount.com",
+  "client_id": "116174698885109639604",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/mhb-service-acct%40mental-health-bot-ttgm.iam.gserviceaccount.com"
+}
