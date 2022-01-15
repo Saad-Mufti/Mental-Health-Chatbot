@@ -49,8 +49,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/mental-health-bot-ttgm-d3c2a7e002f8.json
-    - assets/actual_dialogflow_api_key.json
+    - assets/mental-health-chatbot-87bdf-e3e4469abf9b.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:

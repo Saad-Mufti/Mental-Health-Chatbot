@@ -12,7 +12,7 @@ final globalKey = GlobalKey<ScaffoldState>();
 
 initDialogFlow() async {
   auth = await dialogflow.AuthGoogle(
-          fileJson: "assets/actual_dialogflow_api_key.json")
+          fileJson: "assets/mental-health-chatbot-87bdf-e3e4469abf9b.json")
       .build();
   df = dialogflow.Dialogflow(authGoogle: auth);
   print(df.language);
