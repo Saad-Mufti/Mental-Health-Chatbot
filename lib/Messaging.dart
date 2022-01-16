@@ -3,16 +3,12 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 final ScrollController _controller = ScrollController();
 
 void _scrollDown() {
-  _controller.animateTo(
-      _controller.position.maxScrollExtent + 100,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 500)
-    );
+  _controller.animateTo(_controller.position.maxScrollExtent + 100,
+      curve: Curves.easeOut, duration: const Duration(milliseconds: 500));
 }
 
 class MessagingClient {
@@ -88,7 +84,7 @@ StreamBuilder messageList(MessagingClient messagingClient) {
       stream: messagingClient.allMessagesStream,
       builder: (BuildContext context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
-        if(_controller.hasClients) {
+        if (_controller.hasClients) {
           _scrollDown();
         }
         return Padding(
@@ -114,11 +110,15 @@ class Message {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
         child: Padding(
           padding: EdgeInsets.all(18),
-          child: Text(
-            this.message,
-            style: TextStyle(fontSize: 17),
-            overflow: TextOverflow.ellipsis,
-          ),
+          child: Container(
+              constraints:
+                  BoxConstraints(maxWidth: 300, maxHeight: double.infinity),
+              child: Text(
+                this.message,
+                maxLines: 10,
+                style: TextStyle(fontSize: 17),
+                overflow: TextOverflow.ellipsis,
+              )),
         ));
   }
 
@@ -169,7 +169,7 @@ void userSend(Dialogflow df, MessagingClient client) {
 Widget bottomMessageBar(
     BuildContext context, MessagingClient client, Dialogflow df) {
   return Container(
-      color: Color(0xffFFFFFF),
+      color: Color(0xffffffff),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
