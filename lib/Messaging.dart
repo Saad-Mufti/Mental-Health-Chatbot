@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:js';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';

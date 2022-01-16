@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
 
-    var messagingClient = MessagingClient("John Doe");
+    var messagingClient = MessagingClient("Saad Mufti");
     return Scaffold(
       backgroundColor: Color(0xffFFF9C7),
       key: globalKey,
