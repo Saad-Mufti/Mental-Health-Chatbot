@@ -1,14 +1,56 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final ScrollController _controller = ScrollController();
 
 void _scrollDown() {
   _controller.animateTo(_controller.position.maxScrollExtent + 100,
       curve: Curves.easeOut, duration: const Duration(milliseconds: 500));
+}
+
+List<TextSpan> parseLinkString(String s) {
+  List<TextSpan> textSpans = [];
+  bool parsingLink = false;
+  String linkForSpan = "";
+  String addToSpan = "";
+  for(int i=0; i<s.length; i++) {
+    if(s[i] == '[') {
+      textSpans.add(TextSpan( 
+        text: addToSpan,
+        style: TextStyle(fontSize: 17),
+      ));
+      addToSpan = "";
+
+    } else if(s[i] == ']') {
+      continue;
+    } else if(s[i] == '(') {
+      parsingLink = true;
+    } else if(s[i] == ')') {
+      textSpans.add(TextSpan(
+        text: addToSpan,
+        style: TextStyle(fontSize: 17, color: Colors.blue),
+        recognizer: TapGestureRecognizer()..onTap = () { launch(linkForSpan);},
+      ));
+      parsingLink = false;
+      addToSpan = "";
+    } else {
+      if(parsingLink) {
+        linkForSpan += s[i];
+      } else {
+        addToSpan += s[i];
+      }
+    }
+  }
+  textSpans.add(TextSpan(
+    text: addToSpan,
+    style: TextStyle(fontSize: 17),
+    ));
+  return textSpans;
 }
 
 class MessagingClient {
@@ -113,12 +155,11 @@ class Message {
           child: Container(
               constraints:
                   BoxConstraints(maxWidth: 300, maxHeight: double.infinity),
-              child: Text(
-                this.message,
-                maxLines: 10,
-                style: TextStyle(fontSize: 17),
-                overflow: TextOverflow.ellipsis,
-              )),
+              child: RichText( 
+                text: TextSpan(
+                  children: parseLinkString(this.message),
+                )
+              ))
         ));
   }
 
