@@ -157,11 +157,12 @@ class Message {
           child: Container(
               constraints:
                   BoxConstraints(maxWidth: 300, maxHeight: double.infinity),
-              child: RichText( 
-                text: TextSpan(
+              child: SelectableText.rich(
+                TextSpan(
                   children: parseLinkString(this.message),
                 )
-              ))
+              )
+          )
         ));
   }
 
