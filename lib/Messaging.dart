@@ -1,10 +1,14 @@
 import 'dart:developer';
+import 'dart:js';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
+
+import 'main.dart';
 
 final ScrollController _controller = ScrollController();
 
@@ -35,7 +39,33 @@ List<TextSpan> parseLinkString(String s) {
       textSpans.add(TextSpan(
         text: addToSpan,
         style: TextStyle(fontSize: 17, color: Colors.blue),
-        recognizer: TapGestureRecognizer()..onTap = () { launch(linkForSpan);},
+        recognizer: TapGestureRecognizer()..onTap = () {showDialog<String>(
+        context: navigatorKey.currentContext,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Link Detected'),
+          content: Text('How would you like to handle this link:\n$linkForSpan'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () { 
+                Clipboard.setData(ClipboardData(text: linkForSpan));
+                return Navigator.pop(context, 'Copy Link'); 
+                },
+              child: const Text('Copy Link'),
+            ),
+            TextButton(
+              onPressed: () {
+                launch(linkForSpan);
+                return Navigator.pop(context, 'Open Link');
+              },
+              child: const Text('Open Link'),
+            )
+          ],
+        ),
+      );},
       ));
       parsingLink = false;
       inLink = false;

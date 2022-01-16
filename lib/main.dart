@@ -18,12 +18,18 @@ initDialogFlow() async {
   print(df.language);
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(
+    MaterialApp(
+      home: MyApp(),
+      navigatorKey: navigatorKey,
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
