@@ -15,6 +15,7 @@ void _scrollDown() {
 
 List<TextSpan> parseLinkString(String s) {
   List<TextSpan> textSpans = [];
+  bool inLink = false;
   bool parsingLink = false;
   String linkForSpan = "";
   String addToSpan = "";
@@ -25,18 +26,19 @@ List<TextSpan> parseLinkString(String s) {
         style: TextStyle(fontSize: 17),
       ));
       addToSpan = "";
-
-    } else if(s[i] == ']') {
+      inLink = true;
+    } else if(s[i] == ']' && inLink) {
       continue;
-    } else if(s[i] == '(') {
+    } else if(s[i] == '(' && inLink) {
       parsingLink = true;
-    } else if(s[i] == ')') {
+    } else if(s[i] == ')' && inLink) {
       textSpans.add(TextSpan(
         text: addToSpan,
         style: TextStyle(fontSize: 17, color: Colors.blue),
         recognizer: TapGestureRecognizer()..onTap = () { launch(linkForSpan);},
       ));
       parsingLink = false;
+      inLink = false;
       addToSpan = "";
     } else {
       if(parsingLink) {
