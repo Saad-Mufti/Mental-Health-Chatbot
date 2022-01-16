@@ -35,7 +35,9 @@ List<TextSpan> parseLinkString(String s) {
       continue;
     } else if(s[i] == '(' && inLink) {
       parsingLink = true;
+      linkForSpan = "";
     } else if(s[i] == ')' && inLink) {
+      String value = linkForSpan;
       textSpans.add(TextSpan(
         text: addToSpan,
         style: TextStyle(fontSize: 17, color: Colors.blue),
@@ -43,7 +45,7 @@ List<TextSpan> parseLinkString(String s) {
         context: navigatorKey.currentContext,
         builder: (BuildContext context) => AlertDialog(
           title: const Text('Link Detected'),
-          content: Text('How would you like to handle this link:\n$linkForSpan'),
+          content: Text('How would you like to handle this link:\n' + value),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -51,14 +53,14 @@ List<TextSpan> parseLinkString(String s) {
             ),
             TextButton(
               onPressed: () { 
-                Clipboard.setData(ClipboardData(text: linkForSpan));
+                Clipboard.setData(ClipboardData(text: value));
                 return Navigator.pop(context, 'Copy Link'); 
                 },
               child: const Text('Copy Link'),
             ),
             TextButton(
               onPressed: () {
-                launch(linkForSpan);
+                launch(value);
                 return Navigator.pop(context, 'Open Link');
               },
               child: const Text('Open Link'),
